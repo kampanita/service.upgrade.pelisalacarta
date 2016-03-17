@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>        
-    <setting id="tiempo" label="Ejecucion cada x Minutos" type="slider" default="1" range="1,29,1440" option="int" />   
+    <setting id="tiempo" label="Ejecucion cada x Minutos" type="slider" default="1440" range="10,10,1440" option="int" />   
 </settings>
