@@ -36,7 +36,7 @@ def upgrade():
            fh = open(path+'pelis.zip', 'rb')
            z = zipfile.ZipFile(fh)
            for name in z.namelist():
-               if name.startswith('/pelisalacarta-master/python/main-classic'):
+               if "main-classic" in str(name):
                    outpath = path2+"addons/plugin.video.pelisalacarta/"
                    z.extract(name, outpath)
            fh.close()
