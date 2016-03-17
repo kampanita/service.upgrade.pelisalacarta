@@ -12,14 +12,15 @@ addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
 icon = addon.getAddonInfo('icon')
 tiempo = addon.getSetting('tiempo') 
-time = 5000 #in miliseconds
-
+time = 10000 #in miliseconds
+notify = addon.getSetting('notify') 
 def upgrade():  
 
     path=xbmc.translatePath('special://temp/')
     path2=xbmc.translatePath('special://home/')
 
-    #xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"upgrade inicia", time, icon))
+    if notify:
+        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Comprobando actualizacion", time, icon))
     
     file = urllib2.urlopen("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master")
     file_int = int(file.info()['Content-Length'])
@@ -31,10 +32,7 @@ def upgrade():
         file_local = 0
     
     if file_int <> file_local:
-    
-        #xbmc.log("ejecutado NoIp "+str(file_int)+" - "+str(file_local))
-        #xbmc.log("ejecutado NoIp "+path+'pelis.zip')
-        
+                    
         urllib.urlretrieve ("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master", path+'pelis.zip')
                 
         try:
@@ -48,12 +46,14 @@ def upgrade():
         
            os.rename(path+'pelis.zip',path+'pelis.zip.old')
         
-           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Pelisalacarta upgradeado", time, icon))
+           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Pelisalacarta upgradeado", 2*time , icon))
         
         except:
            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Error en upgrade", time, icon))
    
-    #xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Upgrade termina", time, icon))
+    if notify:
+        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Terminada comprobacion", time, icon))
+    
     return;
 
 def test():
