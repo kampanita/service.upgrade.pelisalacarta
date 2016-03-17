@@ -19,8 +19,6 @@ def upgrade():
     path=xbmc.translatePath('special://temp/')
     path2=xbmc.translatePath('special://home/')
 
-    #xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"upgrade inicia", time, icon))
-    
     file = urllib2.urlopen("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master")
     file_int = int(file.info()['Content-Length'])
     
@@ -32,9 +30,6 @@ def upgrade():
     
     if file_int <> file_local:
     
-        #xbmc.log("ejecutado NoIp "+str(file_int)+" - "+str(file_local))
-        #xbmc.log("ejecutado NoIp "+path+'pelis.zip')
-        
         urllib.urlretrieve ("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master", path+'pelis.zip')
                 
         try:
@@ -52,8 +47,6 @@ def upgrade():
         
         except:
            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Error en upgrade", time, icon))
-   
-    #xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Upgrade termina", time, icon))
     return;
 
 upgrade()
