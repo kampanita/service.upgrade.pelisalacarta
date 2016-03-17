@@ -19,7 +19,7 @@ def upgrade():
     path=xbmc.translatePath('special://temp/')
     path2=xbmc.translatePath('special://home/')
 
-    xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"upgrade inicia", time, icon))
+    #xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"upgrade inicia", time, icon))
     
     file = urllib2.urlopen("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master")
     file_int = int(file.info()['Content-Length'])
@@ -32,8 +32,8 @@ def upgrade():
     
     if file_int <> file_local:
     
-        xbmc.log("ejecutado NoIp "+str(file_int)+" - "+str(file_local))
-        xbmc.log("ejecutado NoIp "+path+'pelis.zip')
+        #xbmc.log("ejecutado NoIp "+str(file_int)+" - "+str(file_local))
+        #xbmc.log("ejecutado NoIp "+path+'pelis.zip')
         
         urllib.urlretrieve ("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master", path+'pelis.zip')
                 
@@ -53,19 +53,17 @@ def upgrade():
         except:
            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Error en upgrade", time, icon))
    
-    xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Upgrade termina", time, icon))
+    #xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Upgrade termina", time, icon))
     return;
 
 upgrade()
-
-#do_the_job()
 
 if __name__ == '__main__':
 
     monitor = xbmc.Monitor()
  
     while not monitor.abortRequested():
-        # Sleep/wait for abort for 10 seconds ( media hora )
+        # Sleep/wait for abort for tiempo in minutos
         if monitor.waitForAbort(60*int(tiempo)):
             # Abort was requested while waiting. We should exit
             break
