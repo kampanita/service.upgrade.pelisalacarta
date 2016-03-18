@@ -12,7 +12,7 @@ addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
 icon = addon.getAddonInfo('icon')
 tiempo = addon.getSetting('tiempo') 
-time = 10000 #in miliseconds
+time = 7000 #in miliseconds
 notify = addon.getSetting('notify') 
 def upgrade():  
 
@@ -20,7 +20,7 @@ def upgrade():
     path2=xbmc.translatePath('special://home/')
 
     if notify:
-        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Comprobando actualizacion", time, icon))
+        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"checking git-master", time, icon))
     
     file = urllib2.urlopen("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master")
     file_int = int(file.info()['Content-Length'])
@@ -42,17 +42,25 @@ def upgrade():
                if "main-classic" in str(name):
                    outpath = path2+"addons/plugin.video.pelisalacarta"
                    z.extract(name, outpath)
+                   xbmc.log('UpdPelisALaCarta - '+name+' -> '+outpath)
+                   
            fh.close()
         
            os.rename(path+'pelis.zip',path+'pelis.zip.old')
         
-           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Pelisalacarta upgradeado", 2*time , icon))
+           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"upgraded from git-master", 2*time , icon))
         
-        except:
-           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Error en upgrade", time, icon))
+        except Exception as e:
+           s = str(e)
+           xbmc.log('UpdPelisALaCarta - Error en el proceso '+s)  
+           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Error upgrade", time, icon))
    
+    else:
+        if notify:
+           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"No need to upgrade", time , icon))
+           
     if notify:
-        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Terminada comprobacion", time, icon))
+        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"finished checking", time, icon))
     
     return;
 
@@ -97,8 +105,3 @@ if __name__ == '__main__':
             # Abort was requested while waiting. We should exit
             break
         upgrade()
-
-
-
-
-        
