@@ -17,10 +17,5 @@
 		<source>https://github.com/kampanita/service.upgrade.pelisalacarta</source>
 		<email>kampanita@gmail.com</email>
   </extension>
-  <extension point="xbmc.addon.repository"
-              name="service.upgrade.pelisalacarta Add-on Repository">
-    <info compressed="true">https://github.com/kampanita/service.upgrade.pelisalacarta/blob/master/addon.xml</info>
-    <checksum>https://github.com/kampanita/service.upgrade.pelisalacarta/blob/master/addons.xml.md5</checksum>
-    <datadir zip="true">https://github.com/kampanita/service.upgrade.pelisalacarta/archive/master.zip</datadir>
-  </extension>
+  
 </addon>
