@@ -1,3 +1,8 @@
+1.0.3 Cambios minimos.
+      -Mejorado el sistema de notificaciones
+      
+1.0.2 Cambios minimos.
+
 1.0.1 Version publicada
       -Corriendo como servicio
       -Anadido setting para mostrar o no notificaciones
