@@ -11,14 +11,17 @@ import os
 addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
 icon = addon.getAddonInfo('icon')
-tiempo = addon.getSetting('tiempo') 
+
+path=xbmc.translatePath('special://temp/')
+path2=xbmc.translatePath('special://home/')
+
 time = 7000 #in miliseconds
-notify = addon.getSetting('notify') 
+
 def upgrade():  
-
-    path=xbmc.translatePath('special://temp/')
-    path2=xbmc.translatePath('special://home/')
-
+    
+    notify = addon.getSetting('notify') 
+    tiempo = addon.getSetting('tiempo')     
+    
     if notify:
         xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"checking git-master", time, icon))
     
