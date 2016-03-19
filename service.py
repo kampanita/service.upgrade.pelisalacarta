@@ -7,20 +7,26 @@ import urllib2
 import base64
 import zipfile
 import os
+import shutil
 
 addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
 icon = addon.getAddonInfo('icon')
 
-path=xbmc.translatePath('special://temp/')
+path= addon.getSetting('temp')
 path2=xbmc.translatePath('special://home/')
+tiempo = addon.getSetting('tiempo')  
+notify = addon.getSetting('notify')    
 
 time = 7000 #in miliseconds
+
+
 
 def upgrade():  
     
     notify = addon.getSetting('notify') 
     tiempo = addon.getSetting('tiempo')     
+    path= addon.getSetting('temp')
     
     if notify:
         xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"checking git-master", time, icon))
@@ -33,22 +39,28 @@ def upgrade():
     
     except :    
         file_local = 0
-    
+        xbmc.log("No encuentro el fichero");
+        
     if file_int <> file_local:
-                    
-        urllib.urlretrieve ("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master", path+'pelis.zip')
+        
+        if notify:
+            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"downloading new version", time, icon))            
+        
+        urllib.urlretrieve ("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master",  xbmc.translatePath(path+'pelis.zip'))
                 
         try:
            fh = open(path+'pelis.zip', 'rb')
            z = zipfile.ZipFile(fh)
+          
            for name in z.namelist():
                if "main-classic" in str(name):
-                   outpath = path2+"addons/plugin.video.pelisalacarta"
-                   z.extract(name, outpath)
-                   xbmc.log('UpdPelisALaCarta - '+name+' -> '+outpath)
                    
+                   z.extract(name,path)                
+                 
            fh.close()
-        
+           
+           shutil.move(xbmc.translatePath(path+'pelisalacarta-master/python/main-classic/*'), xbmc.translatePath('special://home/addons/plugin.video.pelisalacarta/'))
+           os.remove(path+'pelis.zip.old')
            os.rename(path+'pelis.zip',path+'pelis.zip.old')
         
            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"upgraded from git-master", 2*time , icon))
@@ -68,30 +80,8 @@ def upgrade():
     return;
 
 def test():
-    xbmc.log('inicio el proceso')  
-    
-    path=xbmc.translatePath('special://temp/kk/')
-    path2=xbmc.translatePath('special://home/')
-    
-    try:
-           xbmc.log('intento abrir '+path+'pelis.zip')
-           
-           fh = open(path+'pelis.zip', 'rb')
-           z = zipfile.ZipFile(fh)
-           for name in z.namelist():
-               if "main-classic" in str(name):
-                   outpath = path2+"addons/plugin.video.pelisalacarta/"
-                   xbmc.log('existe '+path+name+' y lo dejo en '+path2)
-                   xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,name, 200, icon))
-               else:
-                   xbmc.log("porque no lo saca ?"+name+"?")
-                   
-           fh.close()
-    except Exception as e:
-           s = str(e)
-           xbmc.log('error descomprimiento '+s)
-           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Error descomprimiendo", 10000, icon))
-    
+	
+    xbmc.log('inicio el proceso')    
     return;
   
 #test()
