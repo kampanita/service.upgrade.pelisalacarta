@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>        
 	  <setting id="notify" label="Notify on execution" type="bool" default="true" />   
-          <setting id="tiempo" label="Execute every minutes" type="slider" default="1" range="1,1,1440" option="int" />   
+          <setting id="tiempo" label="Execute every minutes" type="slider" default="1" range="1,30,1440" option="int" />   
+          <setting id="temp" label="Temporal Folder" type="folder" default="special://temp/" />   
 </settings>
