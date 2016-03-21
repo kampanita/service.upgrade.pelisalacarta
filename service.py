@@ -8,7 +8,8 @@ import base64
 import zipfile
 import os
 import shutil
-
+import errno
+ 
 addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
 icon = addon.getAddonInfo('icon')
@@ -21,8 +22,18 @@ notify = addon.getSetting('notify')
 time = 7000 #in miliseconds
 
 
+def copydir(source, dest, indent = 0):
+    """Copy a directory structure overwriting existing files"""
+    for root, dirs, files in os.walk(source):
+        if not os.path.isdir(root):
+            os.makedirs(root)
+        for each_file in files:
+            rel_path = root.replace(source, '').lstrip(os.sep)
+            dest_path = os.path.join(dest, rel_path, each_file)
+            shutil.copyfile(os.path.join(root, each_file), dest_path)
 
 def upgrade():  
+    
     
     notify = addon.getSetting('notify') 
     tiempo = addon.getSetting('tiempo')     
@@ -38,7 +49,7 @@ def upgrade():
         file_local = int(os.path.getsize(xbmc.translatePath(path+'pelis.zip.old')))
     
     except :    
-        file_local = 0
+        file_local = 0        
         xbmc.log("No encuentro el fichero");
         
     if file_int <> file_local:
@@ -59,10 +70,18 @@ def upgrade():
                  
            fh.close()
            
-           shutil.move(xbmc.translatePath(path+'pelisalacarta-master/python/main-classic/*'), xbmc.translatePath(path2+'/addons/plugin.video.pelisalacarta/'))
-           os.remove(xbmc.translatePath(path+'pelis.zip.old'))
+           ori = xbmc.translatePath(path+'pelisalacarta-master/python/main-classic')
+           dest =  xbmc.translatePath(path2+'/addons/plugin.video.pelisalacarta')
+           
+           copydir(ori,dest)
+           try:
+               os.remove(xbmc.translatePath(path+'pelis.zip.old'))
+           except:
+           	   xbmc.log('No hay pelis.zip.old')
+           	   
            os.rename(xbmc.translatePath(path+'pelis.zip'),xbmc.translatePath(path+'pelis.zip.old'))
-        
+           shutil.rmtree(xbmc.translatePath(path+'pelisalacarta-master'))
+           
            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"upgraded from git-master", 2*time , icon))
         
         except Exception as e:
