@@ -20,7 +20,7 @@ tiempo = addon.getSetting('tiempo')
 notify = addon.getSetting('notify')    
 
 time = 7000 #in miliseconds
-time2= 1000
+time2= 100
 
 def copydir(source, dest, indent = 0):
     """Copy a directory structure overwriting existing files"""
@@ -33,7 +33,7 @@ def copydir(source, dest, indent = 0):
             shutil.copyfile(os.path.join(root, each_file), dest_path)
             #xbmc.log(root+each_file+' -> '+dest_path+each_file)
             if notify:
-                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,dest_path, time2, icon))
+                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,each_file+'('+dest_path+')', time2, icon))
             
 def upgrade():  
     
