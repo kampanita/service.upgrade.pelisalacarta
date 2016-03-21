@@ -35,7 +35,7 @@ def upgrade():
     file_int = int(file.info()['Content-Length'])
     
     try :    
-        file_local = int(os.path.getsize(path+'pelis.zip.old'))
+        file_local = int(os.path.getsize(xbmc.translatePath(path+'pelis.zip.old')))
     
     except :    
         file_local = 0
@@ -49,19 +49,19 @@ def upgrade():
         urllib.urlretrieve ("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master",  xbmc.translatePath(path+'pelis.zip'))
                 
         try:
-           fh = open(path+'pelis.zip', 'rb')
+           fh = open( xbmc.translatePath(path+'pelis.zip'), 'rb')
            z = zipfile.ZipFile(fh)
           
            for name in z.namelist():
                if "main-classic" in str(name):
                    
-                   z.extract(name,path)                
+                   z.extract(name,xbmc.translatePath(path))                
                  
            fh.close()
            
            shutil.move(xbmc.translatePath(path+'pelisalacarta-master/python/main-classic/*'), xbmc.translatePath('special://home/addons/plugin.video.pelisalacarta/'))
-           os.remove(path+'pelis.zip.old')
-           os.rename(path+'pelis.zip',path+'pelis.zip.old')
+           os.remove(xbmc.translatePath(path+'pelis.zip.old'))
+           os.rename(xbmc.translatePath(path+'pelis.zip'),xbmc.translatePath(path+'pelis.zip.old'))
         
            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"upgraded from git-master", 2*time , icon))
         
