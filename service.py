@@ -32,7 +32,8 @@ def copydir(source, dest, indent = 0):
             dest_path = os.path.join(dest, rel_path, each_file)
             shutil.copyfile(os.path.join(root, each_file), dest_path)
             #xbmc.log(root+each_file+' -> '+dest_path+each_file)
-            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,each_file, time2, icon))
+            if notify:
+                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,each_file, time2, icon))
             
 def upgrade():  
     
