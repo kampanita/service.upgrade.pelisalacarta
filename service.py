@@ -59,7 +59,7 @@ def upgrade():
                  
            fh.close()
            
-           shutil.move(xbmc.translatePath(path)+'pelisalacarta-master/python/main-classic/*', xbmc.translatePath('special://home/addons')+'/plugin.video.pelisalacarta/')
+           shutil.move(xbmc.translatePath(path)+'pelisalacarta-master/python/main-classic/*', xbmc.translatePath(path2)+'/addons/plugin.video.pelisalacarta/')
            os.remove(xbmc.translatePath(path)+'pelis.zip.old')
            os.rename(xbmc.translatePath(path)+'pelis.zip',xbmc.translatePath(path)+'pelis.zip.old')
         
