@@ -33,7 +33,7 @@ def copydir(source, dest, indent = 0):
             shutil.copyfile(os.path.join(root, each_file), dest_path)
             #xbmc.log(root+each_file+' -> '+dest_path+each_file)
             if notify:
-                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,each_file, time2, icon))
+                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,dest_path, time2, icon))
             
 def upgrade():  
     
@@ -74,7 +74,7 @@ def upgrade():
            fh.close()
            
            ori = xbmc.translatePath(path+'pelisalacarta-master/python/main-classic')
-           dest =  xbmc.translatePath(path2+'/addons/plugin.video.pelisalacarta')
+           dest =  xbmc.translatePath(path2+'addons/plugin.video.pelisalacarta')
            
            copydir(ori,dest)
            
