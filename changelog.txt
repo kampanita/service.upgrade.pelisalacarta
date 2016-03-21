@@ -1,3 +1,7 @@
+1.0.4 Añadido para tmp
+      -Se añade eleccion de carpeta temporal
+      -Se pone por defecto el servicio 1 vez al dia ( 1440 minutos )
+      
 1.0.3 Cambios minimos.
       -Mejorado el sistema de notificaciones
       
