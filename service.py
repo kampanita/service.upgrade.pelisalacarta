@@ -20,7 +20,7 @@ tiempo = addon.getSetting('tiempo')
 notify = addon.getSetting('notify')    
 
 time = 7000 #in miliseconds
-
+time2= 1000
 
 def copydir(source, dest, indent = 0):
     """Copy a directory structure overwriting existing files"""
@@ -31,7 +31,9 @@ def copydir(source, dest, indent = 0):
             rel_path = root.replace(source, '').lstrip(os.sep)
             dest_path = os.path.join(dest, rel_path, each_file)
             shutil.copyfile(os.path.join(root, each_file), dest_path)
-
+            #xbmc.log(root+each_file+' -> '+dest_path+each_file)
+            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,each_file, time2, icon))
+            
 def upgrade():  
     
     
@@ -74,6 +76,7 @@ def upgrade():
            dest =  xbmc.translatePath(path2+'/addons/plugin.video.pelisalacarta')
            
            copydir(ori,dest)
+           
            try:
                os.remove(xbmc.translatePath(path+'pelis.zip.old'))
            except:
