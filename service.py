@@ -32,10 +32,10 @@ def copydir(source, dest, indent = 0):
         for each_file in files:
             rel_path = root.replace(source, '').lstrip(os.sep)
             dest_path = os.path.join(dest, rel_path, each_file)
-            xbmc.log(root+each_file+' -> '+dest_path)
+            xbmc.log(os.path.join(root, each_file)+' -> '+dest_path)
             shutil.copyfile(os.path.join(root, each_file), dest_path)
             if notify2:
-                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,each_file+'('+dest_path+')', time2, icon))
+                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,each_file, time2, icon))
             
 def upgrade():  
 
@@ -48,10 +48,10 @@ def upgrade():
     
     file = urllib2.urlopen("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master")
     file_int = int(file.info()['Content-Length'])
-    
+    file_int=1
     try :    
         file_local = int(os.path.getsize(xbmc.translatePath(path+'pelis.zip.old')))
-    
+        
     except :    
         file_local = 0        
         xbmc.log("No encuentro el fichero");
@@ -63,7 +63,17 @@ def upgrade():
         
         try:
            
-           urllib.urlretrieve ("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master",  xbmc.translatePath(path+'pelis.zip'))
+           ###
+           #urllib.urlretrieve ("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master",  xbmc.translatePath(path+'pelis.zip'))
+           #
+           ###
+           #  Cambio la manera de bajarme el zip
+           url = "https://codeload.github.com/tvalacarta/pelisalacarta/zip/master"
+           f = urllib2.urlopen(url)
+           with open(xbmc.translatePath(path+'pelis.zip'), "wb") as code: 
+               code.write(f.read())
+               code.close()
+           ### 
            fh = open( xbmc.translatePath(path+'pelis.zip'), 'rb')
            z = zipfile.ZipFile(fh)
           
@@ -100,7 +110,7 @@ def upgrade():
            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"No need to upgrade", time , icon))
            
     if notify:
-        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"finished checking", time, icon))
+        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"HOSTIE finished checking", time, icon))
     
     return;
 
