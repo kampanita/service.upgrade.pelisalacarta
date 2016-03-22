@@ -56,7 +56,7 @@ def upgrade():
     path= addon.getSetting('temp')
     
     if notify:
-        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"checking git-master", time, icon))
+        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Checking git-master", time, icon))
     
     file = urllib2.urlopen("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master")
     file_int = int(file.info()['Content-Length'])
@@ -71,7 +71,7 @@ def upgrade():
     if file_int <> file_local:
         
         if notify:
-            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"downloading new version", time, icon))            
+            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Downloading new version", time, icon))            
         
         try:
            
@@ -108,7 +108,7 @@ def upgrade():
 
            try:
                copydir(ori,dest)	
-               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"upgraded from git-master", 2*time , icon))    
+               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Upgraded from git-master", 2*time , icon))    
            
            except Exception as exp:
                s=str(exp)
@@ -129,7 +129,7 @@ def upgrade():
            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"No need to upgrade", time , icon))
            
     if notify:
-        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"HOSTIE finished checking", time, icon))
+        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Finished checking", time, icon))
     
     return;
 
