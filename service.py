@@ -60,7 +60,7 @@ def upgrade():
     
     file = urllib2.urlopen("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master")
     file_int = int(file.info()['Content-Length'])
-    file_int=1
+    
     try :    
         file_local = int(os.path.getsize(xbmc.translatePath(path+'pelis.zip.old')))
         
