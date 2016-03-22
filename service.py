@@ -41,9 +41,10 @@ def copydir(source, dest, num_files, indent = 0):
             try:            
                if not os.path.exists(dest):             
                     try:
-                        os.mkdir(dest)
-                    except:
+                        os.mkdirs(dest)
                         xbmc.log('creo '+dest)
+                    except:
+                        xbmc.log('Error creando '+dest)
                shutil.copyfile(xbmc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))               
                #shutil.move(xbmc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))                                            
             except Exception as x:               
