@@ -43,7 +43,7 @@ def copydir(source, dest, num_files, indent = 0):
                     try:
                         os.mkdir(dest)
                     except:
-                        pass                        
+                        continue                        
                shutil.copyfile(xbmc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))               
                #shutil.move(xbmc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))                                            
             except Exception as x:               
@@ -130,7 +130,7 @@ def upgrade():
            try:
                os.remove(xbmc.translatePath(os.path.join(path,'pelis.zip.old')))
            except:
-               pass
+               continue
            
            os.rename(xbmc.translatePath(os.path.join(path,'pelis.zip')),xbmc.translatePath(os.path.join(path,'pelis.zip.old')))
         
