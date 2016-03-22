@@ -25,7 +25,7 @@ time2= 100
 num_files=0
 num_files2=0
 
-def copydir(source, dest, indent = 0, num_files = 1):
+def copydir(source, dest, num_files, indent = 0):
     notify2 = addon.getSetting('notify2')
     """Copy a directory structure overwriting existing files"""
     num_files2=0
