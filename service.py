@@ -25,7 +25,7 @@ time2= 100
 num_files=0
 num_files2=0
 
-def copydir(source, dest, indent = 0):
+def copydir(source, dest, indent = 0, num_files = 1):
     notify2 = addon.getSetting('notify2')
     """Copy a directory structure overwriting existing files"""
     num_files2=0
@@ -43,11 +43,12 @@ def copydir(source, dest, indent = 0):
             xbmc.log(os.path.join(root, each_file)+' -> '+dest_path)
          
             try:
-               shutil.copyfile(os.path.join(root, each_file), dest_path)
+               shutil.copyfile(xmbc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))
                num_files2+=1
                xbmc.log("Numero de ficheros copia: "+str(int(num_files2))+' total a copiar: '+str(int(num_files)))
-            except:
-               xbmc.log("FALLA copiando : " + os.path.join(root, each_file)+' -> '+dest_path)
+            except Exception as x:
+               num_files2+=1
+               xbmc.log("!! "+str(x)+ " Copiando : " + xbmc.translatePath(os.path.join(root, each_file))+' -> '+xbmc.translatePath(dest_path))
          
             if notify2:
                  try:
@@ -99,6 +100,7 @@ def upgrade():
                code.close()
            if notify:
                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"DOWNLOADED", time, icon))                           
+           
            ###
            num_files=0
            fh = open( xbmc.translatePath(path+'pelis.zip'), 'rb')
@@ -120,7 +122,7 @@ def upgrade():
            dest =  xbmc.translatePath(path2+'addons/plugin.video.pelisalacarta')
 
            try:
-               copydir(ori,dest)	
+               copydir(ori,dest,num_files)	
                if notify:
                    xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Files copied "+str(num_files2), time, icon))            
            
