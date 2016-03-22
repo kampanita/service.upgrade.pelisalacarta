@@ -123,10 +123,6 @@ def upgrade():
 
            try:
                copydir(ori,dest,num_files)	
-               if notify:
-                   xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Files copied "+str(num_files2), time, icon))            
-           
-               
                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Upgraded from git-master", 2*time , icon))    
            
            except Exception as exp:
