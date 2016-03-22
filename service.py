@@ -43,7 +43,7 @@ def copydir(source, dest, indent = 0, num_files = 1):
             xbmc.log(os.path.join(root, each_file)+' -> '+dest_path)
          
             try:
-               shutil.copyfile(xmbc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))
+               shutil.copyfile(xbmc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))
                num_files2+=1
                xbmc.log("Numero de ficheros copia: "+str(int(num_files2))+' total a copiar: '+str(int(num_files)))
             except Exception as x:
