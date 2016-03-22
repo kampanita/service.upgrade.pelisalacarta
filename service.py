@@ -38,8 +38,7 @@ def copydir(source, dest, indent = 0):
                 xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,each_file+'('+dest_path+')', time2, icon))
             
 def upgrade():  
-    
-    
+
     notify = addon.getSetting('notify') 
     tiempo = addon.getSetting('tiempo')     
     path= addon.getSetting('temp')
@@ -62,9 +61,9 @@ def upgrade():
         if notify:
             xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"downloading new version", time, icon))            
         
-        urllib.urlretrieve ("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master",  xbmc.translatePath(path+'pelis.zip'))
-                
         try:
+           
+           urllib.urlretrieve ("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master",  xbmc.translatePath(path+'pelis.zip'))
            fh = open( xbmc.translatePath(path+'pelis.zip'), 'rb')
            z = zipfile.ZipFile(fh)
           
@@ -77,18 +76,19 @@ def upgrade():
            
            ori = xbmc.translatePath(path+'pelisalacarta-master/python/main-classic')
            dest =  xbmc.translatePath(path2+'addons/plugin.video.pelisalacarta')
-           
-           copydir(ori,dest)
-           
+
            try:
-               os.remove(xbmc.translatePath(path+'pelis.zip.old'))
-           except:
-           	   xbmc.log('No hay pelis.zip.old')
-           	   
-           os.rename(xbmc.translatePath(path+'pelis.zip'),xbmc.translatePath(path+'pelis.zip.old'))
-           shutil.rmtree(xbmc.translatePath(path+'pelisalacarta-master'))
+               copydir(ori,dest)	
+               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"upgraded from git-master", 2*time , icon))    
            
-           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"upgraded from git-master", 2*time , icon))
+           except Exception as exp:
+               s=str(exp)
+               xbmc.log('UpdPelisALaCarta - Error en el proceso '+s)  
+               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Error upgrade "+s, time*3, icon))
+           
+           shutil.rmtree(xbmc.translatePath(path+'pelisalacarta-master'))
+           os.remove(xbmc.translatePath(path+'pelis.zip.old'))
+           os.rename(xbmc.translatePath(path+'pelis.zip'),xbmc.translatePath(path+'pelis.zip.old'))
         
         except Exception as e:
            s = str(e)
