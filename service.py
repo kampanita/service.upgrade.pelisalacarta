@@ -32,8 +32,8 @@ def copydir(source, dest, indent = 0):
         for each_file in files:
             rel_path = root.replace(source, '').lstrip(os.sep)
             dest_path = os.path.join(dest, rel_path, each_file)
+            xbmc.log(root+each_file+' -> '+dest_path)
             shutil.copyfile(os.path.join(root, each_file), dest_path)
-            #xbmc.log(root+each_file+' -> '+dest_path+each_file)
             if notify2:
                 xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,each_file+'('+dest_path+')', time2, icon))
             
