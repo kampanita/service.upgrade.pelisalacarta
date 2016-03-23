@@ -26,35 +26,40 @@ num_files=0
 num_files2=0
 
 def copydir(source, dest, num_files, indent = 0):
+ 
     notify2 = addon.getSetting('notify2')
     """Copy a directory structure overwriting existing files"""
+ 
     num_files2=0
     dialog  = xbmcgui.DialogProgressBG()
     dialog.create('UpdPelisAlacarta - copy files')    
+ 
     for root, dirs, files in os.walk(source):
         if not os.path.isdir(root):
             os.makedirs(root)     
         for each_file in files:
             rel_path = root.replace(source, '').lstrip(os.sep)
             dest_path = os.path.join(dest, rel_path, each_file)        
-            xbmc.log(os.path.join(root, each_file)+' -> '+dest_path)         
-            try:            
-               if not os.path.exists(dest):             
-                    try:
-                        os.mkdirs(dest)
-                        xbmc.log('creo '+dest)
+            
+            try:         
+               dir_destino=os.path.join(dest, rel_path)   
+               
+               if not os.path.isdir(dir_destino):             
+                    try:            
+                        os.mkdir(dir_destino)               
                     except:
-                        xbmc.log('Error creando '+dest)
+                        xbmc.log('Error creando '+dir_destino)
+               
                shutil.copyfile(xbmc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))               
-               #shutil.move(xbmc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))                                            
+
             except Exception as x:               
                xbmc.log(str(num_files2)+"/"+str(num_files)+" !! "+str(x)+' '+xbmc.translatePath(dest_path))         
+                  
             num_files2+=1
+            
             if notify2:
                  progreso=int(float(num_files2)/float(num_files))*100                                
-                 dialog.update(progreso,rel_path,each_file)
-                
-    dialog.update(-1)
+                 dialog.update(progreso,rel_path,each_file)                    
     dialog.close
     
 def upgrade():  
@@ -71,7 +76,7 @@ def upgrade():
     
     try :    
         file_local = int(os.path.getsize(xbmc.translatePath(os.path.join(path,'pelis.zip.old'))))
-        
+      
     except :    
         file_local = 0        
         xbmc.log("No encuentro el fichero");
@@ -83,11 +88,6 @@ def upgrade():
         
         try:
            
-           ###
-           #urllib.urlretrieve ("https://codeload.github.com/tvalacarta/pelisalacarta/zip/master",  xbmc.translatePath(path+'pelis.zip'))
-           #
-           ###
-           
            url = "https://codeload.github.com/tvalacarta/pelisalacarta/zip/master"
            f = urllib2.urlopen(url)
            with open(xbmc.translatePath(os.path.join(path,'pelis.zip')), "wb") as code: 
@@ -95,8 +95,7 @@ def upgrade():
                code.close()
            if notify:
                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"DOWNLOADED", time, icon))                           
-           
-           ###
+                      
            num_files=0
            fh = open( xbmc.translatePath(os.path.join(path,'pelis.zip')), 'rb')
            z = zipfile.ZipFile(fh)
