@@ -47,11 +47,14 @@ def copydir(source, dest, num_files, indent = 0):
                if not os.path.isdir(dir_destino):             
                     try:            
                         os.mkdir(dir_destino)               
+                        xbmc.log('!!!!! Creado '+dir_destino+' que no existia !!!!!')
                     except:
                         xbmc.log('Error creando '+dir_destino)
                
                shutil.copyfile(xbmc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))               
-
+               
+               xbmc.log('Copiado '+dest_path)
+               
             except Exception as x:               
                xbmc.log(str(num_files2)+"/"+str(num_files)+" !! "+str(x)+' '+xbmc.translatePath(dest_path))         
                   
@@ -60,6 +63,7 @@ def copydir(source, dest, num_files, indent = 0):
             if notify2:
                  progreso=int(float(num_files2)/float(num_files))*100                                
                  dialog.update(progreso,rel_path,each_file)                    
+                 
     dialog.close
     
 def upgrade():  
@@ -105,20 +109,18 @@ def upgrade():
                    
                    z.extract(name,xbmc.translatePath(path))                
                    num_files+=1
-                   xbmc.log("Numero de ficheros en el zip "+str(num_files))
+                   #xbmc.log("Numero de ficheros en el zip "+str(num_files))
                    
            fh.close()
            
            if notify:
-               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Files extracted from zip "+str(num_files), time, icon))            
+               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Files "+str(num_files)+" extracted from zip ", time, icon))            
            
            ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-master/python/main-classic'))
            dest =  xbmc.translatePath(os.path.join(path2,'addons/plugin.video.pelisalacarta'))
 
            try:
-               copydir(ori,dest,num_files)	              
-               
-               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Upgraded from git-master", 2*time , icon))    
+               copydir(ori,dest,num_files)	                                            
            
            except Exception as exp:
                s=str(exp)
@@ -134,6 +136,8 @@ def upgrade():
            
            os.rename(xbmc.translatePath(os.path.join(path,'pelis.zip')),xbmc.translatePath(os.path.join(path,'pelis.zip.old')))
         
+           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Upgraded from git-master", 2*time , icon))    
+        
         except Exception as e:
            s = str(e)
            xbmc.log('UpdPelisALaCarta - Error en el proceso '+s)  
@@ -143,8 +147,8 @@ def upgrade():
         if notify:
            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"No need to upgrade", time , icon))
            
-    if notify:
-        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Finished checking", time, icon))
+    #if notify:
+    #    xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Finished checking", time, icon))
     
     return;
 
