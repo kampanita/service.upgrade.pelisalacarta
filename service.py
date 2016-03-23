@@ -131,11 +131,11 @@ def upgrade():
            
            try:
                os.remove(xbmc.translatePath(os.path.join(path,'pelis.zip.old')))
-           except:
-               xbmc.log('no existia pelis.zip.old')
+               os.rename(xbmc.translatePath(os.path.join(path,'pelis.zip')),xbmc.translatePath(os.path.join(path,'pelis.zip.old')))
            
-           os.rename(xbmc.translatePath(os.path.join(path,'pelis.zip')),xbmc.translatePath(os.path.join(path,'pelis.zip.old')))
-        
+           except Exception as ex:
+               xbmc.log('Problema con pelis.zip.old '+str(ex))
+               
            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Upgraded from git-master", 2*time , icon))    
         
         except Exception as e:
@@ -147,8 +147,8 @@ def upgrade():
         if notify:
            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"No need to upgrade", time , icon))
            
-    #if notify:
-    #    xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Finished checking", time, icon))
+    if notify:
+        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Finished checking", time, icon))
     
     return;
 
