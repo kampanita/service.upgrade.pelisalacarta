@@ -8,7 +8,7 @@ import zipfile
 import os
 import shutil
 import errno
-import re 
+import time
 
 addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
