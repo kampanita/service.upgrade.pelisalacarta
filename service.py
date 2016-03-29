@@ -71,7 +71,7 @@ def copydir(source, dest, num_files, indent = 0):
             if notify2:
                  progreso=int(float(num_files2)/float(num_files))*100                                
                  dialog.update(progreso,str(num_files2)+'/'+str(num_files)+' '+rel_path,each_file)
-                 sleep(50/1000)                    
+                 time.sleep(50/1000)                    
                  
     dialog.close
     
