@@ -8,7 +8,7 @@ import zipfile
 import os
 import shutil
 import errno
-import time
+import time 
 
 addon       = xbmcaddon.Addon()
 addonname   = addon.getAddonInfo('name')
@@ -28,8 +28,7 @@ tiempo = addon.getSetting('tiempo')
 notify = addon.getSetting('notify')    
 
 
-time = 7000 #in miliseconds
-time2= 100
+__time__ = 7000 #in miliseconds
 num_files=0
 num_files2=0
 
@@ -61,7 +60,7 @@ def copydir(source, dest, num_files, indent = 0):
                
                shutil.copyfile(xbmc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))               
                
-               #xbmc.log('Copiado '+dest_path)
+               xbmc.log('Copied '+dest_path)
                
             except Exception as x:               
                xbmc.log(str(num_files2)+"/"+str(num_files)+" !! "+str(x)+' '+xbmc.translatePath(dest_path))         
@@ -71,7 +70,7 @@ def copydir(source, dest, num_files, indent = 0):
             if notify2:
                  progreso=int(float(num_files2)/float(num_files))*100                                
                  dialog.update(progreso,str(num_files2)+'/'+str(num_files)+' '+rel_path,each_file)
-                 #time.sleep(1)                    
+                 time.sleep(0.1)                    
                  
     dialog.close
     
@@ -84,7 +83,7 @@ def upgrade():
     version_to_download=addon.getSetting('version_to_download')
     
     if notify:
-        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Checking git-"+version_to_download, time, icon))
+        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Checking git-"+version_to_download, __time__, icon))
     
     try:
         file = urllib2.urlopen("https://github.com/tvalacarta/pelisalacarta/archive/"+version_to_download+".zip")
@@ -103,7 +102,7 @@ def upgrade():
     if file_int <> file_local:
         
         if notify:
-            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Downloading new version from "+version_to_download, time, icon))            
+            xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Downloading new version from "+version_to_download, __time__, icon))            
         
         try:
            
@@ -113,7 +112,7 @@ def upgrade():
                code.write(f.read())
                code.close()
            if notify:
-               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Downloaded "+version_to_download, time, icon))                           
+               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Downloaded "+version_to_download, __time__, icon))                           
                       
            num_files=0
            fh = open( xbmc.translatePath(os.path.join(path,'pelis.zip')), 'rb')
@@ -129,7 +128,7 @@ def upgrade():
            fh.close()
            
            if notify:
-               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,str(num_files)+" files extracted from "+version_to_download+".zip ", time, icon))            
+               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,str(num_files)+" files extracted from "+version_to_download+".zip ", __time__, icon))            
            
            ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download+'/python/main-classic'))
            dest =  xbmc.translatePath(os.path.join(path2,'addons/plugin.video.pelisalacarta'))
@@ -140,7 +139,7 @@ def upgrade():
            except Exception as exp:
                s=str(exp)
                xbmc.log('UpdPelisALaCarta - Error en el proceso '+s)  
-               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Error upgrading "+s, time*3, icon))
+               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Error upgrading "+s, __time__*3, icon))
            
            shutil.rmtree(xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download)))
            
@@ -151,19 +150,19 @@ def upgrade():
            
            os.rename(xbmc.translatePath(os.path.join(path,'pelis.zip')),xbmc.translatePath(os.path.join(path,'pelis.zip.old')))
         
-           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Upgraded from git-"+version_to_download, 2*time , icon))    
+           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Upgraded from git-"+version_to_download, 2*__time__ , icon))    
         
         except Exception as e:
            s = str(e)
            xbmc.log('UpdPelisALaCarta - Error en el proceso '+s)  
-           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Error upgrading", time, icon))
+           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Error upgrading", __time__, icon))
    
     else:
         if notify:
-           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"No need to upgrade", time , icon))
+           xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"No need to upgrade", __time__ , icon))
            
     #if notify:
-    #    xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Finished checking", time, icon))
+    #    xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Finished checking", __time__, icon))
     
     return;
 
