@@ -70,7 +70,8 @@ def copydir(source, dest, num_files, indent = 0):
             
             if notify2:
                  progreso=int(float(num_files2)/float(num_files))*100                                
-                 dialog.update(progreso,str(num_files2)+'/'+str(num_files)+' '+rel_path,each_file)                    
+                 dialog.update(progreso,str(num_files2)+'/'+str(num_files)+' '+rel_path,each_file)
+                 sleep(50/1000)                    
                  
     dialog.close
     
@@ -128,7 +129,7 @@ def upgrade():
            fh.close()
            
            if notify:
-               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Files "+str(num_files)+" extracted from "+version_to_download+".zip ", time, icon))            
+               xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,str(num_files)+" files extracted from "+version_to_download+".zip ", time, icon))            
            
            ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download+'/python/main-classic'))
            dest =  xbmc.translatePath(os.path.join(path2,'addons/plugin.video.pelisalacarta'))
