@@ -83,7 +83,7 @@ def upgrade():
     version_to_download=addon.getSetting('version_to_download')
     
     if notify:
-        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Checking git-master", time, icon))
+        xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,"Checking git-"+version_to_download, time, icon))
     
     try:
         file = urllib2.urlopen("https://github.com/tvalacarta/pelisalacarta/archive/"+version_to_download+".zip")
