@@ -139,16 +139,21 @@ def upgrade():
            if notify:
                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,str(num_files)+" files extracted from "+version_to_download+".zip ", __time__, icon))            
            
-           if what=="todo":
-              ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download+'/python/main-classic'))
-           else:
-              ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download+'/python/main-classic/channels'))
+           
            
            if version_plugin=="classic":
-              dest =  xbmc.translatePath(os.path.join(path2,'addons/plugin.video.pelisalacarta'))
-           else:
+              if what=="todo":
+                  ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download+'/python/main-classic'))
+                  dest =  xbmc.translatePath(os.path.join(path2,'addons/plugin.video.pelisalacarta'))
+              else:
+                  ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download+'/python/main-classic/channels'))
+                  dest =  xbmc.translatePath(os.path.join(path2,'addons/plugin.video.pelisalacarta/channels'))
+           
+           else:           
+           
               ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download+'/python/main-classic/channels'))
               dest =  xbmc.translatePath(os.path.join(path2,'addons/plugin.video.pelisalacarta-ui/channels'))
+           
            try:
                copydir(ori,dest,num_files)	                                            
            
