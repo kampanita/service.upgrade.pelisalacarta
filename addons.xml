@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-	<addon id="service.upgrade.pelisalacarta"
+<addon id="service.upgrade.pelisalacarta"
        name="Upgrade PelisALaCarta"
        version="2.2.1"
        provider-name="kampanita">
@@ -24,5 +24,5 @@
     <checksum>https://github.com/kampanita/service.upgrade.pelisalacarta/addons.xml.md5</checksum>
     <datadir zip="true">https://github.com/kampanita/service.upgrade.pelisalacarta</datadir>
   </extension>
- </addon>
+</addon>
 </addons>
