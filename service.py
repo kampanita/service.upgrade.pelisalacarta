@@ -80,7 +80,7 @@ def upgrade():
     tiempo = addon.getSetting('tiempo')     
     path= addon.getSetting('temp')
     what= addon.getSetting('what')
-    version_plugin= addon.getSetting('version_pluign')    
+    version_plugin= addon.getSetting('version_plugin')    
     version_to_download=addon.getSetting('version_to_download')
     
     if notify:
