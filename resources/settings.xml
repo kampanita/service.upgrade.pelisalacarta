@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>        
 	  <setting id="notify" label="Notify on execution" type="bool" default="true" />   
+          <setting id="version_plugin" label="Plugin Version to download" type="select" default="classic" values="classic|ui" />
+          <setting id="what" label="What will be downloaded" type="select" default="all" values="all|only channels" />
           <setting id="tiempo" label="Execute every minutes" type="slider" default="1440" range="60,60,1440" option="int" />   
           <setting id="temp" label="Temporal Folder" type="folder" default="special://temp/" />   
           <setting id="notify2" label="Notify every file changed" type="bool" default="true" />   
-          <setting id="version_to_download" label="Version to download" type="select" default="master" values="master|develop" />
+          <setting id="version_to_download" label="Version to download" type="select" default="master" values="master|develop" />          
 </settings>
