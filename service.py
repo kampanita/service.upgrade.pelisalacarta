@@ -70,16 +70,17 @@ def copydir(source, dest, num_files, indent = 0):
             if notify2:
                  progreso=int(float(num_files2)/float(num_files))*100                                
                  dialog.update(progreso,str(num_files2)+'/'+str(num_files)+' '+rel_path,each_file)
-                 time.sleep(0.1)                    
+                 time.sleep(50/1000)                    
                  
     dialog.close
     
 def upgrade():  
-
+    #me traigo los valores del settings.xml
     notify = addon.getSetting('notify') 
     tiempo = addon.getSetting('tiempo')     
     path= addon.getSetting('temp')
-    
+    what= addon.getSetting('what')
+    version_plugin= addon.getSetting('version_pluign')    
     version_to_download=addon.getSetting('version_to_download')
     
     if notify:
@@ -118,21 +119,36 @@ def upgrade():
            fh = open( xbmc.translatePath(os.path.join(path,'pelis.zip')), 'rb')
            z = zipfile.ZipFile(fh)
            
+                     
            for name in z.namelist():
-               if "main-classic" in str(name):
-                   
-                   z.extract(name,xbmc.translatePath(path))                
-                   num_files+=1
-                   #xbmc.log("Numero de ficheros en el zip "+str(num_files))
-                   
+               if ((what=="todo") or (version_plugin=="classic")):
+                   if "main-classic" in str(name):
+                       
+                       z.extract(name,xbmc.translatePath(path))                
+                       num_files+=1
+                       #xbmc.log("Numero de ficheros en el zip "+str(num_files))
+               else:
+                   if "channels" in str(name):
+                       
+                       z.extract(name,xbmc.translatePath(path))                
+                       num_files+=1
+                       #xbmc.log("Numero de ficheros en el zip "+str(num_files))
+               
            fh.close()
            
            if notify:
                xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(addonname,str(num_files)+" files extracted from "+version_to_download+".zip ", __time__, icon))            
            
-           ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download+'/python/main-classic'))
-           dest =  xbmc.translatePath(os.path.join(path2,'addons/plugin.video.pelisalacarta'))
-
+           if what=="todo":
+              ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download+'/python/main-classic'))
+           else:
+              ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download+'/python/main-classic/channels'))
+           
+           if version_plugin=="classic":
+              dest =  xbmc.translatePath(os.path.join(path2,'addons/plugin.video.pelisalacarta'))
+           else:
+              ori = xbmc.translatePath(os.path.join(path,'pelisalacarta-'+version_to_download+'/python/main-classic/channels'))
+              dest =  xbmc.translatePath(os.path.join(path2,'addons/plugin.video.pelisalacarta-ui/channels'))
            try:
                copydir(ori,dest,num_files)	                                            
            
