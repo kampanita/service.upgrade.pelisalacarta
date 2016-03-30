@@ -1,3 +1,10 @@
+2.1.2 Se añaden varias cosas
+      Añadido Eleccion de Version ( Clasica/UI )
+      Añadido Eleccion de instalacion ( todo/solo canales)
+      Añadido Eleccion de rama GIT ( master/develop)
+      
+...
+...
 1.1   Comprobado en Windows/Linux/Raspberry
 
 1.0.4 Añadido para tmp
