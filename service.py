@@ -1,3 +1,10 @@
+#####
+## Servicio para udgradear el plugin PelisALaCarta automaticamente
+## -= Para Vagos y Maleantes =-
+## por kampanita ( Marzo 2016 )
+## http://www.inkubopunk.org
+###
+
 import xbmc
 import xbmcaddon
 import xbmcgui
