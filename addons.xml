@@ -2,7 +2,7 @@
 <addons>
 <addon id="service.upgrade.pelisalacarta"
        name="Upgrade PelisALaCarta"
-       version="2.2.1"
+       version="2.2.2"
        provider-name="kampanita">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
