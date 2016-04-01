@@ -103,7 +103,13 @@ def upgrade():
     except :    
         file_local = 0                
         xbmc.log("No encuentro el fichero pelis.zip.old");
-        touch(xbmc.translatePath(os.path.join(path,'pelis.zip.old')))
+    
+    if file_local==0:
+    	try:
+            touch(xbmc.translatePath(os.path.join(path,'pelis.zip.old')))
+            xbmc.log("No existia pelis.zip.old, lo hemos creado.")
+        except Exception as ex:
+            xbmc.log("Error haciendo touch del fichero pelis.zip.old"+str(ex))
         
     if file_int <> file_local:
         
