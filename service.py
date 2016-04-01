@@ -32,6 +32,10 @@ __time__ = 7000 #in miliseconds
 num_files=0
 num_files2=0
 
+def touch(fname, times=None):
+    with open(fname, 'a'):
+        os.utime(fname, times)
+
 def copydir(source, dest, num_files, indent = 0):
  
     notify2 = addon.getSetting('notify2')
@@ -98,7 +102,8 @@ def upgrade():
       
     except :    
         file_local = 0                
-        xbmc.log("No encuentro el fichero");
+        xbmc.log("No encuentro el fichero pelis.zip.old");
+        touch(xbmc.translatePath(os.path.join(path,'pelis.zip.old')))
         
     if file_int <> file_local:
         
