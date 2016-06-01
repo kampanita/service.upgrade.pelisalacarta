@@ -1,10 +1,3 @@
-#####
-## Servicio para udgradear el plugin PelisALaCarta automaticamente
-## -= Para Vagos y Maleantes =-
-## por kampanita ( Marzo 2016 )
-## http://www.inkubopunk.org
-###
-
 import xbmc
 import xbmcaddon
 import xbmcgui
@@ -50,7 +43,7 @@ def copydir(source, dest, num_files, indent = 0):
  
     num_files2=0
     dialog  = xbmcgui.DialogProgressBG()
-    dialog.create('UpdPelisAlacarta - copy files')    
+    dialog.create('UpdPelisALaCarta','')    
  
     for root, dirs, files in os.walk(source):
         if not os.path.isdir(root):
@@ -72,17 +65,19 @@ def copydir(source, dest, num_files, indent = 0):
                shutil.copyfile(xbmc.translatePath(os.path.join(root, each_file)), xbmc.translatePath(dest_path))               
                
                xbmc.log('Copied '+dest_path)
+
+               num_files2+=1
+            
+               if notify2:
+                    progreso=int(float(num_files2)/float(num_files))*100                                
+                    dialog.update(progreso,str(num_files2)+'/'+str(num_files)+' '+rel_path,each_file)
+                    
                
             except Exception as x:               
                xbmc.log(str(num_files2)+"/"+str(num_files)+" !! "+str(x)+' '+xbmc.translatePath(dest_path))         
                   
-            num_files2+=1
-            
-            if notify2:
-                 progreso=int(float(num_files2)/float(num_files))*100                                
-                 dialog.update(progreso,str(num_files2)+'/'+str(num_files)+' '+rel_path,each_file)
-                 time.sleep(50/1000)                    
-                 
+           
+    dialog.update(0,'','')             
     dialog.close
     
 def upgrade():  
