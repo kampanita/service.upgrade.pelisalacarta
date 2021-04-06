@@ -1,0 +1,25 @@
+2.1.2 Se añaden varias cosas
+      Añadido Eleccion de Version ( Clasica/UI )
+      Añadido Eleccion de instalacion ( todo/solo canales)
+      Añadido Eleccion de rama GIT ( master/develop)
+      
+...
+...
+1.1   Comprobado en Windows/Linux/Raspberry
+
+1.0.4 Añadido para tmp
+      -Se añade eleccion de carpeta temporal
+      -Se pone por defecto el servicio 1 vez al dia ( 1440 minutos )
+      
+1.0.3 Cambios minimos.
+      -Mejorado el sistema de notificaciones
+      
+1.0.2 Cambios minimos.
+
+1.0.1 Version publicada
+      -Corriendo como servicio
+      -Anadido setting para mostrar o no notificaciones
+      -Anadido setting para controlar cada cuanto tiempo se ejecuta el servicio
+
+1.0.0 Initial Release
+      - Primera version funcionando  
